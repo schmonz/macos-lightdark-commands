@@ -4,15 +4,12 @@ set -e
 
 set_iterm_mode() {
 	mode=$1; shift
-# python api to select a "color preset":
-#import asyncio
-#import iterm2
-#async def set_colors(connection, preset_name):
-#    print("Change to preset {}".format(preset_name))
-#    preset = await iterm2.ColorPreset.async_get(connection, preset_name)
-#    for partial in (await iterm2.PartialProfile.async_query(connection)):
-#        if partial.name in PROFILES:
-#            await partial.async_set_color_preset(preset)
+	# Download <https://iterm2.com/python-api/_downloads/5d351349bb5297f76f9d4a63f2ee997b/theme.its>
+	# iTerm2 -> Settings -> General -> Magic: Enable Python API
+	# Scripts -> Manage -> Install Python Runtime
+	# Scripts -> Manage -> Import... -> your downloaded script -> AutoLaunch
+	# Scripts -> Manage -> Reveal Scripts in Finder
+	# Scripts folder -> AutoLaunch -> theme -> theme -> edit theme.py with your preferred themes
 }
 
 set_vim_mode() {
@@ -42,9 +39,9 @@ warn() {
 main() {
 	current_mode=$1; [ $# -ge 1 ] && shift
 	is_mode_valid ${current_mode} || current_mode=$(read_current_mode)
-	warn "running script with mode ${current_mode}"
+	warn "$(basename $0) ${current_mode}"
 
-	#set_iterm_mode ${current_mode}
+	set_iterm_mode ${current_mode}
 	set_vim_mode ${current_mode}
 }
 
