@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Disabled</key>
+	<false/>
+	<key>Label</key>
+	<string>com.schmonz.lightdark</string>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/usr/local/bin:/opt/pkg/bin:/opt/pkg/sbin:/Users/schmonz/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+	</dict>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Users/schmonz/bin/lightdark-script</string>
+	</array>
+	<key>WatchPaths</key>
+	<array>
+	<string>/Users/schmonz/Library/Preferences/.GlobalPreferences.plist</string>
+	</array>
+	<key>StandardOutPath</key>
+	<string>/Users/schmonz/Library/Logs/lightdark-schmonz.out</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/schmonz/Library/Logs/lightdark-schmonz.err</string>
+</dict>
+</plist>

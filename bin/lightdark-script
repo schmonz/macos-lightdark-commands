@@ -1,0 +1,52 @@
+#!/bin/sh
+
+set -e
+
+set_iterm_mode() {
+	mode=$1; shift
+# python api to select a "color preset":
+#import asyncio
+#import iterm2
+#async def set_colors(connection, preset_name):
+#    print("Change to preset {}".format(preset_name))
+#    preset = await iterm2.ColorPreset.async_get(connection, preset_name)
+#    for partial in (await iterm2.PartialProfile.async_query(connection)):
+#        if partial.name in PROFILES:
+#            await partial.async_set_color_preset(preset)
+}
+
+set_vim_mode() {
+	mode=$1; shift
+	sed -e "s|^set background=.*|set background=${mode}|" < ~/.vimrc > ~/.vimrc.tmp
+	mv ~/.vimrc.tmp ~/.vimrc
+	# XXX: needs to update vim processes with open buffers
+}
+
+read_current_mode() {
+	if defaults read -g AppleInterfaceStyle >/dev/null 2>&1; then
+		echo dark
+	else
+		echo light
+	fi
+}
+
+is_mode_valid() {
+	mode=$1; shift
+	[ dark = "${mode}" ] || [ light = "${mode}" ]
+}
+
+warn() {
+	echo >&2 "$@"
+}
+
+main() {
+	current_mode=$1; [ $# -ge 1 ] && shift
+	is_mode_valid ${current_mode} || current_mode=$(read_current_mode)
+	warn "running script with mode ${current_mode}"
+
+	#set_iterm_mode ${current_mode}
+	set_vim_mode ${current_mode}
+}
+
+main "$@"
+exit $?
