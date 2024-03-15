@@ -2,34 +2,10 @@
 
 set -e
 
-set_iterm_mode() {
-	mode=$1; shift
-	# Download <https://iterm2.com/python-api/_downloads/5d351349bb5297f76f9d4a63f2ee997b/theme.its>
-	# iTerm2 -> Settings -> General -> Magic: Enable Python API
-	# Scripts -> Manage -> Install Python Runtime
-	# Scripts -> Manage -> Import... -> your downloaded script -> AutoLaunch
-	# Scripts -> Manage -> Reveal Scripts in Finder
-	# Scripts folder -> AutoLaunch -> theme -> theme -> edit theme.py with your preferred themes
-}
-
-set_vim_mode() {
-	mode=$1; shift
-	sed -e "s|^set background=.*|set background=${mode}|" < ~/.vimrc > ~/.vimrc.tmp
-	mv ~/.vimrc.tmp ~/.vimrc
-	# XXX: needs to update vim processes with open buffers
-}
-
 read_current_mode() {
-	if defaults read -g AppleInterfaceStyle >/dev/null 2>&1; then
-		echo dark
-	else
-		echo light
-	fi
-}
-
-is_mode_valid() {
-	mode=$1; shift
-	[ dark = "${mode}" ] || [ light = "${mode}" ]
+	defaults read -g AppleInterfaceStyle >/dev/null 2>&1 \
+		&& echo dark \
+		|| echo light
 }
 
 warn() {
@@ -37,12 +13,9 @@ warn() {
 }
 
 main() {
-	current_mode=$1; [ $# -ge 1 ] && shift
-	is_mode_valid ${current_mode} || current_mode=$(read_current_mode)
-	warn "$(basename $0) ${current_mode}"
-
-	set_iterm_mode ${current_mode}
-	set_vim_mode ${current_mode}
+	current_mode="$(read_current_mode)"
+	echo "${current_mode}" > ${HOME}/.macoslightdark
+	warn "${current_mode}"
 }
 
 main "$@"

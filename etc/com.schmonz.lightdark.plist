@@ -6,11 +6,6 @@
 	<false/>
 	<key>Label</key>
 	<string>com.schmonz.lightdark</string>
-	<key>EnvironmentVariables</key>
-	<dict>
-		<key>PATH</key>
-		<string>/usr/local/bin:/opt/pkg/bin:/opt/pkg/sbin:/Users/schmonz/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
-	</dict>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/Users/schmonz/bin/lightdark-script</string>
